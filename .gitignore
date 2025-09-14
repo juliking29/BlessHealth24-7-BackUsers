@@ -1,0 +1,51 @@
+# Node  
+node_modules/  
+npm-debug.log*  
+yarn-debug.log*  
+yarn-error.log*  
+pnpm-debug.log*  
+package-lock.json  
+yarn.lock  
+pnpm-lock.yaml  
+  
+# Build outputs  
+dist/  
+build/  
+coverage/  
+.tmp/  
+.temp/  
+  
+# TypeScript  
+*.tsbuildinfo  
+
+# Env and secrets
+env/*
+.env
+.env.*
+!.env.example
+
+# OS/Editors
+.DS_Store  
+Thumbs.db  
+.idea/  
+.vscode/  
+*.swp  
+  
+# Logs  
+logs/  
+*.log  
+*.log.*  
+nohup.out  
+  
+# Certificates/keys (no subir privados)  
+
+*.pem  
+*.key  
+*.crt  
+certs/  
+certificate/  
+!certs/README.md  
+!certificate/README.md  
+  
+# Docker (si aplica)  
+docker-data/
