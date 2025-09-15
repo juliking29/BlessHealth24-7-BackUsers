@@ -34,18 +34,32 @@ export default class Server {
      * Sets up JSON parsing and URL-encoded data parsing for incoming requests.
      */
     public configure() {
-        // Configuración de CORS  
-    this.app.use(cors({
-    origin: true, // permite cualquier origen temporalmente
+  // CORS para producción (y localhost en dev)
+  const allowedOrigins = [
+    'https://blesshealth247-backgestionusuarios.westus3.cloudapp.azure.com',
+    'http://localhost:3000', // opcional: si tienes front en local
+    'http://localhost:5173'  // opcional: Vite u otro puerto local
+  ];
+
+  this.app.use(cors({
+    origin: (origin, callback) => {
+      // Permite herramientas sin origin (curl, Postman)
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.includes(origin)) return callback(null, true);
+      return callback(new Error(`CORS: Origin no permitido -> ${origin}`));
+    },
     credentials: true,
     methods: ['GET','POST','DELETE','PATCH','HEAD','PUT','OPTIONS'],
     allowedHeaders: ['Content-Type','Authorization','X-Requested-With','Accept','Origin']
-    }));
+  }));
 
-        this.app.use(express.json());
-        this.app.use(express.urlencoded({ extended: true }));
-        this.app.use('/images', express.static('/public/images'));
-    }
+  this.app.use(express.json());
+  this.app.use(express.urlencoded({ extended: true }));
+  this.app.use('/images', express.static('/public/images'));
+
+  // Endpoint de healthcheck (opcional pero recomendado)
+  this.app.get('/health', (_req, res) => res.status(200).json({ status: 'ok' }));
+}
 
     /**
      * Registers all routes and the error handler in the application.
