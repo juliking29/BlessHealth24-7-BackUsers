@@ -58,14 +58,10 @@ export default class ExpressProvider {
     const portPart = (isDefaultHttp || isDefaultHttps) ? '' : `:${inst._port}`;
     return `${inst._protocol}://${inst._host}${portPart}`;
   }
-  public static getCertKey(): string {
-    const val = ExpressProvider.instance()._certKey;
-    if (!val) throw new Error('CERT_KEY no está definido en variables de entorno.');
-    return val;
-  }
-  public static getCertPem(): string {
-    const val = ExpressProvider.instance()._certPem;
-    if (!val) throw new Error('CERT_PEM no está definido en variables de entorno.');
-    return val;
-  }
+  public static getCertKey(): string | undefined {
+  return ExpressProvider.instance()._certKey;
+}
+public static getCertPem(): string | undefined {
+  return ExpressProvider.instance()._certPem;
+}
 }

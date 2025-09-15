@@ -89,17 +89,35 @@ export default class Server {
 
   this.app.set('trust proxy', 1);
 
-  if (PROTOCOL === 'https') {
-    const keyPath = ExpressProvider.getCertKey();
-    const certPath = ExpressProvider.getCertPem();
-    const options = { key: fs.readFileSync(keyPath), cert: fs.readFileSync(certPath) };
-    https.createServer(options, this.app).listen(PORT, '0.0.0.0', () => {
-      console.log(`Server is running on https://${HOST}:${PORT}`);
-    });
-  } else {
-    this.app.listen(PORT, '0.0.0.0', () => {
-      console.log(`Server is running on http://${HOST}:${PORT}`);
-    });
+  const keyPath = ExpressProvider.getCertKey();
+  const certPath = ExpressProvider.getCertPem();
+
+  const canTryHttps =
+    PROTOCOL === 'https' &&
+    typeof keyPath === 'string' &&
+    keyPath.length > 0 &&
+    typeof certPath === 'string' &&
+    certPath.length > 0 &&
+    fs.existsSync(keyPath) &&
+    fs.existsSync(certPath);
+
+  if (canTryHttps) {
+    try {
+      const options = { key: fs.readFileSync(keyPath), cert: fs.readFileSync(certPath) };
+      https.createServer(options, this.app).listen(PORT, '0.0.0.0', () => {
+        console.log(`Server is running on https://${HOST}:${PORT}`);
+      });
+      return;
+    } catch (e) {
+      console.error('[SERVER] Failed to start HTTPS, falling back to HTTP:', e);
+    }
+  } else if (PROTOCOL === 'https') {
+    console.warn('[SERVER] PROTOCOL=https pero faltan certificados válidos. Usando HTTP como respaldo.');
   }
+
+  // Fallback HTTP
+  this.app.listen(PORT, '0.0.0.0', () => {
+    console.log(`Server is running on http://${HOST}:${PORT}`);
+  });
 }
 }
