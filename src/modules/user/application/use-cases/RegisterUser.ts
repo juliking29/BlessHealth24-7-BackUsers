@@ -1,4 +1,4 @@
-import RegisterUserDriver from '../../domain/ports/RegisterUserDriver'
+import RegisterUserDriver from '../../domain/ports/driver/RegisterUserDriver'
 import AbstractUser from '../../domain/abstract/AbstractUser'
 
 export default class RegisterUser implements RegisterUserDriver {

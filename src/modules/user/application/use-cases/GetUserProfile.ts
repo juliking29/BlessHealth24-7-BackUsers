@@ -1,4 +1,4 @@
-import GetProfileDriver from '../../domain/ports/GetProfileDriver'
+import GetProfileDriver from '../../domain/ports/driver/GetProfileDriver'
 import AbstractUser from '../../domain/abstract/AbstractUser'
 
 export default class GetUserProfile implements GetProfileDriver {

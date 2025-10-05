@@ -1,12 +1,13 @@
 import Mailer from '../../../shared/utils/Mailer'
 import InMemoryResetStore from '../../infrastructure/store/InMemoryResetStore'
 import IUserRepository from '../../../user/domain/interfaces/IUserRepository'
+import ForgotPasswordDriver from '../../domain/ports/driver/ForgotPasswordDriver'
 
 function genCode(): string {
   return Math.floor(100000 + Math.random() * 900000).toString() // 6 dígitos
 }
 
-export default class ForgotPassword {
+export default class ForgotPassword implements ForgotPasswordDriver {
   constructor(private readonly users: IUserRepository) {}
 
   async execute(email: string): Promise<{ ok: boolean }> {

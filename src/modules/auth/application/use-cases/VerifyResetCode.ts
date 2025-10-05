@@ -1,7 +1,8 @@
 import InMemoryResetStore from '../../infrastructure/store/InMemoryResetStore'
 import IJwtDriverPort from '../../domain/interfaces/IJwtDriverPort'
+import VerifyResetCodeDriver from '../../domain/ports/driver/VerifyResetCodeDriver'
 
-export default class VerifyResetCode {
+export default class VerifyResetCode implements VerifyResetCodeDriver {
   constructor(private readonly jwt: IJwtDriverPort) {}
 
   async execute(email: string, code: string): Promise<{ ok: true; resetToken: string }> {

@@ -1,13 +1,14 @@
 import IJwtDriverPort from '../../domain/interfaces/IJwtDriverPort'
 import IAuthRepository from '../../domain/interfaces/IAuthRepository'
 import { OAuth2Client, LoginTicket } from 'google-auth-library'
+import GoogleLoginDriver from '../../domain/ports/driver/GoogleLoginDriver'
 
 const GOOGLE_CLIENT_IDS = (process.env['GOOGLE_CLIENT_IDS'] ?? '')
   .split(',')
   .map(s => s.trim())
   .filter(Boolean)
 
-export default class GoogleLogin {
+export default class GoogleLogin implements GoogleLoginDriver {
   private googleClient: OAuth2Client
 
   constructor(

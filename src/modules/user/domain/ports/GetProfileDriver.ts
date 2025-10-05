@@ -1,5 +1,0 @@
-import { User } from '../entities/User'
-
-export default interface GetProfileDriver {
-  execute(userId: number): Promise<Pick<User, 'idUsuario' | 'nombreUsuario' | 'apellidoUsuario' | 'emailUsuario' | 'idRol'>>
-}

@@ -6,6 +6,7 @@ import { AuthCredentials, AuthResult } from '../../domain/entities/Auth'
 import InMemoryResetStore from '../../infrastructure/store/InMemoryResetStore'
 import Mailer from '../../../shared/utils/Mailer'
 import { OAuth2Client } from 'google-auth-library'
+import AuthServiceDriven from '../../domain/ports/driven/AuthServiceDriven'
 
 const RESET_CODE_TTL_MINUTES = 10
 const GOOGLE_CLIENT_IDS = (process.env['GOOGLE_CLIENT_IDS'] ?? '')
@@ -13,7 +14,7 @@ const GOOGLE_CLIENT_IDS = (process.env['GOOGLE_CLIENT_IDS'] ?? '')
   .map(s => s.trim())
   .filter(Boolean)
 
-export default class AuthService extends AbstractAuth {
+export default class AuthService extends AbstractAuth implements AuthServiceDriven{
   private googleClient: OAuth2Client
 
   constructor(

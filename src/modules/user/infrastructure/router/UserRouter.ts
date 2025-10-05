@@ -26,7 +26,9 @@ const RegisterSchema = z.object({
 const UpdateSchema = z.object({
   body: z.object({
     nombreUsuario: z.string().min(1).optional(),
-    apellidoUsuario: z.string().min(1).optional(),
+    emailUsuario: z.string().email().optional(),
+    pwdUsuario: z.string().min(8).optional(),
+    estadoUsuario: z.number().int().min(0).max(1).optional(),
     telefonoUsuario: z.string().min(7).optional(),
     direccionUsuario: z.string().min(3).optional(),
     idSede: z.number().int().positive().nullable().optional()

@@ -34,19 +34,29 @@ export default class UserService extends AbstractUser {
     return { idUsuario: id }
   }
 
-  async getProfile(userId: number): Promise<Pick<User,'idUsuario'|'nombreUsuario'|'apellidoUsuario'|'emailUsuario'|'idRol'>> {
+  async getProfile(userId: number): Promise<Pick<User,'idUsuario' | 'tipoDocumento' | 'numeroDocumento' | 'nombreUsuario' | 'apellidoUsuario' | 'emailUsuario' | 'pwdUsuario' | 'telefonoUsuario' | 'direccionUsuario' | 'fechaNacimiento' | 'genero' | 'idRol' | 'idSede' | 'estadoUsuario' | 'fechaRegistro'>> {
     const u = await this.userRepo.findById(userId)
     if (!u) throw new Error('User not found')
     return {
       idUsuario: u.idUsuario,
+      tipoDocumento: u.tipoDocumento,
+      numeroDocumento: u.numeroDocumento,
       nombreUsuario: u.nombreUsuario,
       apellidoUsuario: u.apellidoUsuario,
       emailUsuario: u.emailUsuario,
-      idRol: u.idRol
+      pwdUsuario: u.pwdUsuario,
+      telefonoUsuario: u.telefonoUsuario,
+      direccionUsuario: u.direccionUsuario,
+      fechaNacimiento: u.fechaNacimiento,
+      genero: u.genero,
+      idRol: u.idRol,
+      idSede: u.idSede,
+      estadoUsuario: u.estadoUsuario,
+      fechaRegistro: u.fechaRegistro
     }
   }
 
-  async updateUser(id: number, data: Partial<Pick<User, 'nombreUsuario'|'apellidoUsuario'|'telefonoUsuario'|'direccionUsuario'|'idSede'>>): Promise<void> {
+  async updateUser(id: number, data: Partial<Pick<User, 'nombreUsuario' | 'emailUsuario' | 'pwdUsuario' | 'telefonoUsuario' | 'direccionUsuario' | 'idSede' | 'estadoUsuario'>>): Promise<void> {
     await this.userRepo.updateUser(id, data as any)
   }
 }

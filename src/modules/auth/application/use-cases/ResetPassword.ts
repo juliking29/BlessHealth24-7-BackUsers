@@ -1,8 +1,9 @@
 import IUserRepository from '../../../user/domain/interfaces/IUserRepository'
 import BlowfishDriver from '../../../shared/utils/PasswordValidator'
 import IJwtDriverPort from '../../domain/interfaces/IJwtDriverPort'
+import ResetPasswordDriver from '../../domain/ports/driver/ResetPasswordDriver'
 
-export default class ResetPassword {
+export default class ResetPassword implements ResetPasswordDriver {
   constructor(
     private readonly userRepo: IUserRepository,
     private readonly jwt: IJwtDriverPort

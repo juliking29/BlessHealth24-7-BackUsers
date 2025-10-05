@@ -1,4 +1,4 @@
-import LoginDriver from '../../domain/ports/LoginDriver'
+import LoginDriver from '../../domain/ports/driver/LoginDriver'
 import { AuthCredentials, AuthResult } from '../../domain/entities/Auth'
 import AbstractAuth from '../../domain/abstract/AbstractAuth'
 
