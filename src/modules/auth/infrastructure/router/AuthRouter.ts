@@ -37,6 +37,13 @@ const GoogleSchema = z.object({
   })
 })
 
+const BiometricSchema = z.object({
+  body: z.object({
+    credential: z.string().min(100), // JWT tiene mínimo longitud
+    deviceId: z.string().min(1)
+  })
+})
+
 export default class AuthRouter implements RouterExpressInterface {
   router: Router
   path: string
